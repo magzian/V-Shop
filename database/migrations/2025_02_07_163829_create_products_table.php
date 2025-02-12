@@ -18,6 +18,7 @@ return new class extends Migration
             $table->id();
             $table->string('title',200);
             $table->string('slug',400);
+            $table->integer('quantity');
             $table->longText('description')->nullable();
             $table->boolean('published')->default(0);
             $table->boolean('inStock')->default(0);
