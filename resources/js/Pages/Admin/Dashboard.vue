@@ -59,6 +59,8 @@
     import AdminLayout from './Components/AdminLayout.vue'
 
 // initialize components based on data attribute selectors
+// initialize components based on data attribute selectors
+
     onMounted(() => {
         initFlowbite();
     })
