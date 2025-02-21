@@ -7,10 +7,27 @@ const products = usePage().props.products;
 const brands = usePage().props.brands;
 const categories = usePage().props.categories;
 
-
 const isAddProduct = ref(false);
 const dialogVisible = ref(false);
 const editMode = ref(false);
+
+//upload multiple images 
+
+const productImages = ref([]);
+const dialogImageUrl = ref('');
+
+const handleFileChange = (file) => {
+    productImages.value.push(file)
+}
+
+const handlePictureCardPreview = (file) => {
+  dialogImageUrl.value = file.url
+  dialogVisible.value = true
+}
+
+const handleRemove = (file) => {
+  console.log(file);
+}
 
 //product from data
 
@@ -25,7 +42,7 @@ const category_id = ref("");
 const brand_id = ref("");
 const inStock = ref("");
 
-const productImages = ref([]);
+
 
 //end
 
@@ -73,14 +90,14 @@ const AddProduct = async () => {
 };
 
 const resetFormData = () => {
-    id.value = '';
-    title.value = '';
-    price.value = '';
-    quantity.value = '';
-    description.value = '';
+    id.value = "";
+    title.value = "";
+    price.value = "";
+    quantity.value = "";
+    description.value = "";
     productImages.value = [];
     /* dialogImageUrl.value = ''; */
-}
+};
 
 const openEditModal = () => {
     /* console.log(product) */
@@ -165,8 +182,13 @@ const openEditModal = () => {
                             v-model="category_id"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         >
-                            <option v-for="category in categories" :key="category.id" :value="category.id" >{{ category.name }}</option>
-
+                            <option
+                                v-for="category in categories"
+                                :key="category.id"
+                                :value="category.id"
+                            >
+                                {{ category.name }}
+                            </option>
                         </select>
                     </form>
 
@@ -181,7 +203,13 @@ const openEditModal = () => {
                             v-model="brand_id"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         >
-                            <option v-for="brand in brands" :key="brand.id" :value="brand.id">{{ brand.name }}</option>
+                            <option
+                                v-for="brand in brands"
+                                :key="brand.id"
+                                :value="brand.id"
+                            >
+                                {{ brand.name }}
+                            </option>
                         </select>
                     </form>
                 </div>
@@ -202,6 +230,24 @@ const openEditModal = () => {
                     </div>
                 </div>
 
+                <!-- multiple images upload -->
+
+                <div class="grid md:gap-6">
+                    <div class="relative z-0 w-full mb-5 group">
+                        <el-upload
+                            v-model:file-list="productImages"
+                            list-type="picture-card" multiple
+                            :on-preview="handlePictureCardPreview"
+                            :on-remove="handleRemove"
+                            :on-change="handleFileChange"
+                        >
+                            <el-icon><Plus /></el-icon>
+                        </el-upload>
+                    </div>
+                </div>
+
+                <!-- end -->
+
                 <button
                     type="submit"
                     @click="AddProduct"
@@ -212,8 +258,6 @@ const openEditModal = () => {
             </form>
 
             <!-- form end -->
-
-
         </el-dialog>
 
         <!-- End of dialogue -->
