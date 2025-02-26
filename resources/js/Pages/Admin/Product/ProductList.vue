@@ -115,7 +115,7 @@ const openEditModal = (product) => {
     description.value = product.description;
     brand_id.value = product.brand_id;
     category_id.value = product.category_id;
-    product_images.value = product.product_images;
+    product_images.value = product.product_images;    
 };
 
 //delete signal product image 
@@ -141,7 +141,7 @@ const deleteImage = async (pimage, index) => {
 
 //update product method 
 
-/* const updateProduct = async () => {
+const updateProduct = async () => {
     const formData = new FormData();
     formData.append("title", title.value);
     formData.append("price", price.value);
@@ -173,10 +173,10 @@ const deleteImage = async (pimage, index) => {
     } catch (error) {
         console.log(err)
     } 
-} */
+}
 
-const updateProduct = () => {
-    axios.put(`/admin/products/update/${this.productId}`, {
+/* const updateProduct = () => {
+    axios.put(`/admin/products/update/${this.id}`, {
         title: this.title,
         price: this.price,
         quantity: this.quantity,
@@ -191,7 +191,7 @@ const updateProduct = () => {
     .catch(error => {
         console.error('Error updating product:', error);
     });
-};
+}; */
 
 
      
