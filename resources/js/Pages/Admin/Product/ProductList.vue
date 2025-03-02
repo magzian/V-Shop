@@ -2,7 +2,7 @@
 import { usePage } from "@inertiajs/vue3";
 import { ref } from "vue";
 import { router } from "@inertiajs/vue3";
-import { Plus } from '@element-plus/icons'
+/* import { Plus } from '@element-plus/icons'; */
 
 
 defineProps({
@@ -178,6 +178,40 @@ const updateProduct = async () => {
     } catch (error) {
         console.log(err)
     } 
+}
+
+//delete product
+
+const deleteProduct = (product, index) => {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: 'This action cannot be undone',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancel',
+        confirmButtonText: 'Yes, delete it'
+    }).then((result)=>{
+        if(result.isConfirmed){
+            try{
+                router.delete('products/destroy/'+product.id, {
+                    onSuccess:(page)=>{
+                        this.delete(product, index)
+                        Swal.fire({
+                            toast: true,
+                            icon: "success", 
+                            position: "top-end",
+                            showConfirmationButton: false,
+                            title: page.props.flash.success,
+                        });
+                    }
+                })
+            } catch (err){
+                console.log(err);
+            }
+        }
+    })
 }
 
 /* const updateProduct = () => {
@@ -722,6 +756,7 @@ const updateProduct = async () => {
                                         </ul>
                                         <div class="py-1">
                                             <a
+                                                @click="deleteProduct(product, index)"
                                                 href="#"
                                                 class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                                                 >Delete</a
