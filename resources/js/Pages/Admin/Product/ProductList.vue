@@ -2,8 +2,13 @@
 import { usePage } from "@inertiajs/vue3";
 import { ref } from "vue";
 import { router } from "@inertiajs/vue3";
+import { Plus } from '@element-plus/icons'
 
-const products = usePage().props.products;
+
+defineProps({
+    products: Array
+});
+
 const brands = usePage().props.brands;
 const categories = ref(usePage().props.categories);
 
