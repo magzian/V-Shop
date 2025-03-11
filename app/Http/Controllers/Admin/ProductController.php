@@ -63,40 +63,7 @@ class ProductController extends Controller
 
     }
 
-    /* public function update(Request $request, $id){
-        $product = Product::findorfail($id);
-
-        $product->title = $request->title;
-        $product->price = $request->price;
-        $product->quantity = $request->quantity;
-        $product->description = $request->description;
-        $product->category_id = $request->category_id;
-        $product->brand_id = $request->brand_id;
-
-        //Check if product images were uploaded
-
-        if($request->hasfile('product_images')){
-            $productImages = $request->file('product_images');
-
-            foreach ($productImages as $image){
-            //Generate a unique name for the image using a timestamp and a string
-
-            $uniqueName = time() . '-' . Str::random(10) . '.' .  $image->getClientOriginalExtension();
-            $image->move('product_images', $uniqueName);
-
-            //Create new product image record with the product_id and unique name
-
-            ProductImage::create([
-                'product_id' => $product->id,
-                'image' => 'product_images/' . $uniqueName,
-            ]);
-        }
-            }
-
-        $product->update();
-        return redirect()->route('admin.product.index')->with('success', 'Product updated successfully');
-        
-    } */
+    
 
     public function update(Request $request, $id)
 {
