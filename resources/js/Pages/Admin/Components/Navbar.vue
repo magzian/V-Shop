@@ -150,7 +150,7 @@
                   >
                     New message from
                     <span class="font-semibold text-gray-900 dark:text-white"
-                      >Bonnie Green</span
+                      >Bonnie</span
                     >: "Hey, what's up? All set for the presentation?"
                   </div>
                   <div
