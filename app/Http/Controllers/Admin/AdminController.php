@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 class AdminController extends Controller
 {
     public function index(){
-        return Inertia::render('Admin/Dashboard', ['admin'=>'admin']);
+
+        return redirect()->route('admin.dashboard');
     }
 }
