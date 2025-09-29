@@ -14,7 +14,7 @@ class UserController extends Controller
 
         $products = Product::with('category','brand','product_images')->orderBy('id','desc')->limit(8)->get();
 
-
+        
         return Inertia::render('User/Index', [
             'products' => $products,
             'canLogin' => app('router')->has('login'),
@@ -23,4 +23,6 @@ class UserController extends Controller
             'phpVersion' => PHP_VERSION,
         ]);
     }
+
+    
 }

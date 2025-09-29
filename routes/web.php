@@ -22,7 +22,8 @@ use App\Http\Controllers\Admin\AdminAuthController;
 
 //user routes
 
-Route::get('/home', [UserController::class, 'index'])->name('user.home');
+Route::get('/', [UserController::class, 'index'])->name('user.home');
+
     
 /* Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
