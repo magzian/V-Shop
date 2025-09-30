@@ -23,6 +23,7 @@ const editMode = ref(false);
 
 const handleFileUpload = (event) => {
     product_images.value = event.target.files[0]
+    
 }
 
 
@@ -65,7 +66,7 @@ const AddProduct = async () => {
     }
 
     
-    
+    console.log(product_images.value)
 
     try {
         await router.post("products/store", formData, {

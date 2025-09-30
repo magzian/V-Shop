@@ -28,40 +28,53 @@ class ProductController extends Controller
         'categories'=> $categories]);
     }
 
-    public function store(Request $request){
-        $product = new Product;
+   public function store(Request $request){
+    // Validate the request
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'price' => 'required|numeric',
+        'quantity' => 'required|integer',
+        'description' => 'required|string',
+        'category_id' => 'required|exists:categories,id',
+        'brand_id' => 'required|exists:brands,id',
+        'product_image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+    ]);
 
-        $product->title = $request->title;
-        $product->price = $request->price;
-        $product->quantity = $request->quantity;
-        $product->description = $request->description;
-        $product->category_id = $request->category_id;
-        $product->brand_id = $request->brand_id;
-        $product->save();
+    // Create the product
+    $product = new Product;
+    $product->title = $request->title;
+    $product->price = $request->price;
+    $product->quantity = $request->quantity;
+    $product->description = $request->description;
+    $product->category_id = $request->category_id;
+    $product->brand_id = $request->brand_id;
+    $product->save();
 
-        //check if product has image
-
-        if($request->hasfile('product_images')){
-            $productImages = $request->file('product_images');
-
-            foreach ($productImages as $image){
-            //Generate a unique name for the image using a timestamp and a string
-
-            $uniqueName = time() . '-' . Str::random(10) . '.' .  $image->getClientOriginalExtension();
-            $image->move('product_images', $uniqueName);
-
-            //Create new product image record with the product_id and unique name
-
-            ProductImage::create([
-                'product_id' => $product->id,
-                'image' => 'product_images/' . $uniqueName,
-            ]);
+    // Handle image upload
+    if($request->hasFile('product_image')){
+        $image = $request->file('product_image');
+        
+        // Generate a unique name for the image
+        $uniqueName = time() . '-' . Str::random(10) . '.' . $image->getClientOriginalExtension();
+        
+        // Create the directory if it doesn't exist
+        $uploadPath = public_path('product_image');
+        if (!file_exists($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
         }
-            }
-
-            return redirect()->route('admin.product.index')->with('success', 'Product created successfully');
-
+        
+        // Move the image to public/product_image folder
+        $image->move($uploadPath, $uniqueName);
+        
+        // Create product image record
+        ProductImage::create([
+            'product_id' => $product->id,
+            'image' => 'product_image/' . $uniqueName,
+        ]);
     }
+
+    return redirect()->route('admin.product.index')->with('success', 'Product created successfully');
+}
 
     
 

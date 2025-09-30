@@ -4,6 +4,7 @@ import UserLayout from "./Layouts/UserLayout.vue";
 defineProps({
     'products': Array
 })
+
 </script>
 
 <template>
@@ -26,7 +27,7 @@ defineProps({
                     >
                         <img
                             v-if="product.product_images.length > 0"
-                            :src="`/product_images/${product.product_images[0].image}`"
+                            :src="`${product.product_images[0].image}`"
                             :alt="product.imageAlt"
                             class="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80"
                         />
